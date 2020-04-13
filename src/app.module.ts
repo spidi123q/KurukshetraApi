@@ -1,12 +1,14 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { MongooseConnectModule } from './config/settings';
-import { UserModule } from './modules/user/user.module';
+import { Module } from "@nestjs/common";
+import { AppController } from "./app.controller";
+import { AppService } from "./app.service";
+import { MongooseConnectModule } from "./config/settings";
+import { UserModule } from "./modules/user/user.module";
+import { ConfigModule } from "@nestjs/config";
+import EnvValidationSchema from "./config/env.validator";
 
 @Module({
-  imports: [MongooseConnectModule, UserModule],
+  imports: [ConfigModule.forRoot({validationSchema: EnvValidationSchema}), MongooseConnectModule(), UserModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService]
 })
 export class AppModule {}

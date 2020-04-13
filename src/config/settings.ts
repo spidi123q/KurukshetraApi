@@ -1,15 +1,18 @@
 import { TypegooseModule } from "nestjs-typegoose";
-import config from "../config/config";
+import FirebaseAdmin from "firebase-admin";
+import { logger } from "./logger";
 
-const env = process.env.environment || "development";
+export const MongooseConnectModule = () => {
+  return TypegooseModule.forRoot(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
+};
 
-export const MongooseConnectModule = TypegooseModule.forRoot(
-  config[env].mongo.uri,
-  { useNewUrlParser: true, useUnifiedTopology: true }
-);
-
-export const SwaggerConfig = config[env].swagger;
-export const storageBucket = config[env].firebase.storageBucket;
+export const InitFirebase = () => FirebaseAdmin.initializeApp({
+  credential: FirebaseAdmin.credential.cert(JSON.parse(process.env.FIREBASE_ADMIN_CONFIG)),
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET
+});;
 
 /** Common Settings which can be used throughout the app */
 export const commonSettings = {

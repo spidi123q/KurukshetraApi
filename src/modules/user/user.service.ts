@@ -10,7 +10,7 @@ export class UserService {
   ) {}
 
   async hello() {
-    const createdCat = new this.userModel({name: 'adsd'})
+    const createdCat = new this.userModel({ name: "adsd" });
     return await createdCat.save();
   }
 }

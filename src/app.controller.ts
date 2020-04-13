@@ -5,11 +5,12 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 @ApiBearerAuth()
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService) {
+    console.log("AppController -> started")
+  }
 
   @Get()
   getHello(): string {
-    console.log("AppController -> getHello -> string")
     this.appService.getHello();
     return "s"
   }

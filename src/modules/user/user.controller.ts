@@ -1,17 +1,24 @@
-import User from 'src/entities/User';
-import { Controller, Get } from '@nestjs/common';
-import { UserService } from './user.service';
-import { ApiResponse } from '@nestjs/swagger';
+import User from "src/modules/user/user.entity";
+import { Controller, Get, UseGuards, Post } from "@nestjs/common";
+import { UserService } from "./user.service";
+import {
+  ApiResponse,
+  ApiBearerAuth,
+  ApiUnauthorizedResponse
+} from "@nestjs/swagger";
+import { BearerAuthGuard } from "../auth/bearer.guard";
 
-@Controller('user')
+
+@ApiUnauthorizedResponse({ description: "Unauthorized" })
+@ApiBearerAuth()
+@UseGuards(BearerAuthGuard)
+@Controller("user")
 export class UserController {
+  constructor(private readonly userService: UserService) {}
 
-    constructor(private readonly userService: UserService) {}
-
-    @Get()
-    async getCats(): Promise<User> {
-      const res =  await this.userService.hello()
-      console.log("UserController -> constructor -> res", res)
-      return {}
-    }
+  @Post()
+  async getCats(): Promise<any> {
+    console.log("UserController -> constructor -> res");
+    return {};
+  }
 }

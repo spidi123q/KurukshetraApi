@@ -1,11 +1,11 @@
-import { InitFirebase } from './config/settings';
+import { initFirebase } from '../config/settings';
 import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class AppService {
   constructor() {
     console.log("AppService -> started")
-    InitFirebase()
+    initFirebase()
   }
   async getHello() {
     return 'await createdCat.save();'

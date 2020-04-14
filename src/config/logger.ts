@@ -1,7 +1,5 @@
 import winston from "winston";
 
-winston.format.combine(winston.format.colorize(), winston.format.json());
-
 /** Logger object */
 export const logger = winston.createLogger({
   transports: [
@@ -11,7 +9,7 @@ export const logger = winston.createLogger({
     new winston.transports.Console({
       format: winston.format.combine(
         winston.format.colorize(),
-        winston.format.simple()
+        winston.format.simple(),
       )
     })
   ]

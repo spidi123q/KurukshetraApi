@@ -5,11 +5,12 @@ import { logger } from "./logger";
 export const MongooseConnectModule = () => {
   return TypegooseModule.forRoot(process.env.MONGODB_URI, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true
   });
 };
 
-export const InitFirebase = () => FirebaseAdmin.initializeApp({
+export const initFirebase = () => FirebaseAdmin.initializeApp({
   credential: FirebaseAdmin.credential.cert(JSON.parse(process.env.FIREBASE_ADMIN_CONFIG)),
   storageBucket: process.env.FIREBASE_STORAGE_BUCKET
 });;

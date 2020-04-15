@@ -4,15 +4,17 @@ import { UserService } from "./user.service";
 import {
   ApiResponse,
   ApiBearerAuth,
-  ApiUnauthorizedResponse
+  ApiUnauthorizedResponse,
+  ApiTags
 } from "@nestjs/swagger";
 import { BearerAuthGuard } from "../auth/bearer.guard";
 
 
+@ApiTags('User')
 @ApiUnauthorizedResponse({ description: "Unauthorized" })
 @ApiBearerAuth()
 @UseGuards(BearerAuthGuard)
-@Controller("user")
+@Controller('api/v1/User')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

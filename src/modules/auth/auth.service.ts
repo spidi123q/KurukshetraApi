@@ -16,14 +16,17 @@ export class AuthService {
     try {
       const firebaseUser = await FirebaseAdmin.auth().verifyIdToken(token);
       logger.info("ID Token correctly decoded", firebaseUser);
-      const appUser = this.userService.getUserByFirebaseId(firebaseUser.uid)
-      if(appUser) {
-        logger.info("User exist in DB")
-          return appUser
+      const appUser = await this.userService.getUserByFirebaseId(
+        firebaseUser.uid
+      );
+      console.log("AuthService -> validateUser -> appUser", appUser);
+      if (appUser) {
+        logger.info("User exist in DB");
+        return appUser;
       } else {
-          logger.info("Creating new user in DB")
-          const newUser = await this.userService.createUser(firebaseUser.uid)
-          return newUser
+        logger.info("Creating new user in DB");
+        const newUser = await this.userService.createUser(firebaseUser.uid);
+        return newUser;
       }
     } catch (err) {
       logger.error("Error while verifying Firebase ID token:", err);

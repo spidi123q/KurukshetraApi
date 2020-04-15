@@ -1,20 +1,36 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
-import { AppService } from './app.service';
-import { ApiBearerAuth, ApiUnauthorizedResponse, ApiAcceptedResponse } from '@nestjs/swagger';
-import { BearerAuthGuard } from './auth/bearer.guard';
+import { logger } from "./../config/logger";
+import { Controller, Get, UseGuards, Request } from "@nestjs/common";
+import { AppService } from "./app.service";
+import {
+  ApiBearerAuth,
+  ApiUnauthorizedResponse,
+  ApiAcceptedResponse,
+  ApiTags,
+  ApiResponseProperty,
+  ApiResponse,
+  ApiOkResponse
+} from "@nestjs/swagger";
+import { BearerAuthGuard } from "./auth/bearer.guard";
+import User from "./user/user.entity";
+import { CurrentUser } from "./auth/current-user.decorator";
 
-@ApiUnauthorizedResponse({description: 'Unauthorized'})
+@ApiTags("App")
+@ApiUnauthorizedResponse({ description: "Unauthorized" })
 @ApiBearerAuth()
 @UseGuards(BearerAuthGuard)
-@Controller()
+@Controller("api/v1")
 export class AppController {
   constructor(private readonly appService: AppService) {
-    console.log("AppController -> started")
+    logger.info("AppController -> started");
   }
 
-  @Get()
-  getHello(): string {
-    this.appService.getHello();
-    return "s"
+  /**
+   * dasdas
+   */
+  @Get("Connection/Ping")
+  @ApiOkResponse({ type: Boolean })
+  ping(@CurrentUser() user: User): boolean {
+    logger.log("User ping from id : ", user._id);
+    return true;
   }
 }

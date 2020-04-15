@@ -10,7 +10,7 @@ class User {
   _id: string;
 
   @ApiProperty({ description: "Role of the user in the app" })
-  @prop({ enum: UserRoles, default: UserRoles.User })
+  @prop({ enum: UserRoles, default: UserRoles.Guest })
   Role: string;
 
   @ApiProperty({ description: "Firebase user uid" })

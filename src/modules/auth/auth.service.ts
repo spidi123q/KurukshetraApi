@@ -19,7 +19,6 @@ export class AuthService {
       const appUser = await this.userService.getUserByFirebaseId(
         firebaseUser.uid
       );
-      console.log("AuthService -> validateUser -> appUser", appUser);
       if (appUser) {
         logger.info("User exist in DB");
         return appUser;

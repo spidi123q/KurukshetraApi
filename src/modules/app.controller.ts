@@ -29,8 +29,8 @@ export class AppController {
    */
   @Get("Connection/Ping")
   @ApiOkResponse({ type: Boolean })
-  ping(@CurrentUser() user: User): boolean {
-    logger.log("User ping from id : ", user._id);
+  ping(@CurrentUser() user: any): boolean {
+    console.log("User ping from id : ", user._id);
     return true;
   }
 }

@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "nestjs-typegoose";
 import { ReturnModelType } from "@typegoose/typegoose";
-import User from "src/modules/user/user.entity";
-import mongoose from "mongoose";
+import User from "src/modules/user/models/user.entity";
+import { UserEdit } from "./models/user-edit";
 
 @Injectable()
 export class UserService {
@@ -10,13 +10,18 @@ export class UserService {
     @InjectModel(User) private readonly userModel: ReturnModelType<typeof User>
   ) {}
 
+  async updateUser(id: string, userEdit: UserEdit): Promise<User> {
+    const result = this.userModel.findByIdAndUpdate(id, userEdit);
+    return result;
+  }
+
   /**
    * Create a new user with minimum properties
    * @param uid Firebase user uid
    */
   async createUser(uid: string): Promise<User> {
     const user = await this.userModel.create({
-      FirebaseId: uid
+      firebaseId: uid
     });
     return user;
   }
@@ -26,7 +31,7 @@ export class UserService {
    * @param uid Firebase user uid
    */
   async getUserByFirebaseId(uid: string): Promise<User | null> {
-    const user = await this.userModel.findOne({FirebaseId: uid})
-    return user
+    const user = await this.userModel.findOne({ firebaseId: uid });
+    return user;
   }
 }

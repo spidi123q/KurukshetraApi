@@ -1,26 +1,44 @@
-import User from "src/modules/user/user.entity";
-import { Controller, Get, UseGuards, Post } from "@nestjs/common";
+import User from "src/modules/user/models/user.entity";
+import { Controller, Get, Post, Body, Put } from "@nestjs/common";
 import { UserService } from "./user.service";
 import {
-  ApiResponse,
   ApiBearerAuth,
-  ApiUnauthorizedResponse,
-  ApiTags
+  ApiTags,
+  ApiOkResponse,
+  ApiOperation,
 } from "@nestjs/swagger";
-import { BearerAuthGuard } from "../auth/bearer.guard";
+import { CurrentUser } from "../auth/current-user.decorator";
+import ApiUpdateResponse from "src/helpers/api-update.response";
+import { UserEdit } from "./models/user-edit";
+import { ApiResponseUnauthorizedResponse, ApiResponseForbiddenResponse } from "src/helpers/api-response.decorator";
+import { Auth } from "../auth/auth.decorator";
 
-
-@ApiTags('User')
-@ApiUnauthorizedResponse({ description: "Unauthorized" })
+@ApiTags("User")
+@ApiResponseUnauthorizedResponse()
+@ApiResponseForbiddenResponse()
 @ApiBearerAuth()
-@UseGuards(BearerAuthGuard)
-@Controller('api/v1/User')
+@Auth()
+@Controller("api/v1/User")
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
-  async getCats(): Promise<any> {
-    console.log("UserController -> constructor -> res");
-    return {};
+  @Put()
+  @ApiOperation({ summary: "Update currently logged in user" })
+  @ApiOkResponse({ type: ApiUpdateResponse })
+  async updateUser(
+    @CurrentUser() id: string,
+    @Body() userEdit: UserEdit
+  ): Promise<ApiUpdateResponse> {
+    const result = await this.userService.updateUser(id, userEdit);
+    return {
+      modelId: result._id
+    };
+  }
+
+  @Get()
+  @ApiOperation({ summary: "Get currently logged in user" })
+  @ApiOkResponse({ type: User })
+  async getUser(@CurrentUser() user: User): Promise<User> {
+    return user;
   }
 }

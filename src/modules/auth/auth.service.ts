@@ -2,7 +2,7 @@ import { logger } from "./../../config/logger";
 import { Injectable } from "@nestjs/common";
 import FirebaseAdmin from "firebase-admin";
 import { UserService } from "../user/user.service";
-import User from "../user/user.entity";
+import User from "../user/models/user.entity";
 
 @Injectable()
 export class AuthService {

@@ -29,6 +29,7 @@
     "@nestjs/platform-express": "^6.7.2",
     "@nestjs/swagger": "^4.5.1",
     "@typegoose/typegoose": "^6.4.0",
+    "@types/hapi__joi": "^16.0.12",
     "fastify-swagger": "^2.5.1",
     "firebase": "^7.14.0",
     "firebase-admin": "^8.10.0",

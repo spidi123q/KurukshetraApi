@@ -7,8 +7,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const port = process.env.PORT;
   const options = new DocumentBuilder()
-    .setTitle("Cats example")
-    .setDescription("The cats API description")
+    .setTitle("Kurukshetra")
+    .setDescription("Club in karukaputhur")
     .setVersion("1.0")
     .addBearerAuth()
     .build();

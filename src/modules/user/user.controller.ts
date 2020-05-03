@@ -9,9 +9,9 @@ import {
 } from "@nestjs/swagger";
 import { CurrentUser } from "../auth/current-user.decorator";
 import ApiUpdateResponse from "src/helpers/api-update.response";
-import { UserEdit } from "./models/user-edit";
 import { ApiResponseUnauthorizedResponse, ApiResponseForbiddenResponse } from "src/helpers/api-response.decorator";
 import { Auth } from "../auth/auth.decorator";
+import UserEdit from "./models/user-edit";
 
 @ApiTags("User")
 @ApiResponseUnauthorizedResponse()

@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "nestjs-typegoose";
 import { ReturnModelType } from "@typegoose/typegoose";
 import User from "src/modules/user/models/user.entity";
-import { UserEdit } from "./models/user-edit";
+import UserEdit from "./models/user-edit";
 
 @Injectable()
 export class UserService {

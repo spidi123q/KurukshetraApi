@@ -1,11 +1,11 @@
 import { logger } from "./../config/logger";
-import { initFirebase } from "../config/settings";
 import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 
 @Injectable()
 export class AppService {
-  constructor() {
+  constructor(private configService: ConfigService) {
     logger.info("AppService -> started");
-    initFirebase();
+    configService.get("initFirebase")();
   }
 }

@@ -16,6 +16,9 @@ class GeoJSON {
     type: [Number],
   })
   @prop({ required: true })
+  /**
+   * Specifying coordinates such longitude first and then latitude
+   */
   coordinates: number[] | Array<number[]>;
 }
 
